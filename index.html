@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#09090f">
+
+<title>ClipForge AI — Create Videos Smarter</title>
+<meta name="description" content="Create video clips, generate scripts, and prepare AI video prompts with ClipForge AI.">
+
+<style>
+:root {
+  --bg: #09090f;
+  --panel: #12121c;
+  --panel2: #191925;
+  --border: #29293b;
+  --text: #f5f5ff;
+  --muted: #a1a1b8;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --green: #34d399;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: min(1120px, 92%);
+  margin: auto;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(9,9,15,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -.7px;
+}
+
+.logo span {
+  color: #a78bfa;
+}
+
+.navlinks {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.navlinks a:hover {
+  color: white;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 17px;
+  background: linear-gradient(110deg, var(--purple), var(--pink));
+  color: white;
+  font-weight: 750;
+  transition: .2s;
+}
+
+.btn:hover {
+  opacity: .9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+}
+
+.btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.hero {
+  padding: 92px 0 65px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, #39205a55, transparent 55%);
+}
+
+.badge {
+  display: inline-block;
+  padding: 7px 13px;
+  border: 1px solid #8b5cf655;
+  border-radius: 99px;
+  color: #c4b5fd;
+  background: #8b5cf610;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 7vw, 72px);
+  line-height: 1.08;
+  letter-spacing: -2.5px;
+  max-width: 850px;
+  margin: auto;
+}
+
+.gradient-text {
+  background: linear-gradient(100deg, #a78bfa, #f0abfc, #fb7185);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 650px;
+  margin: 22px auto 28px;
+  font-size: 17px;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-note {
+  margin-top: 18px;
+  color: #8888a3;
+  font-size: 12px;
+}
+
+.section {
+  padding: 65px 0;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.section-heading h2 {
+  font-size: clamp(27px, 4vw, 40px);
+  letter-spacing: -1px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 23px;
+  min-width: 0;
+}
+
+.card h3 {
+  font-size: 19px;
+  margin: 10px 0 7px;
+}
+
+.card p, .muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  background: #8b5cf622;
+  border-radius: 12px;
+  font-size: 22px;
+}
+
+.tool-layout {
+  display: grid;
+  grid-template-columns: 225px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.sidebar {
+  display: grid;
+  gap: 8px;
+}
+
+.tab {
+  text-align: left;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
+.tab.active {
+  background: #8b5cf61a;
+  border-color: #8b5cf655;
+  color: white;
+}
+
+.tool-panel {
+  display: none;
+}
+
+.tool-panel.active {
+  display: block;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 17px 0 7px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  background: #0c0c15;
+  border: 1px solid var(--border);
+  color: white;
+  border-radius: 9px;
+  outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--purple);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+input[type="file"] {
+  padding: 10px;
+}
+
+input[type="range"] {
+  padding: 0;
+}
+
+video {
+  width: 100%;
+  max-height: 390px;
+  border-radius: 12px;
+  background: black;
+  margin-top: 15px;
+}
+
+.two-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.result {
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #0b0b13;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.status {
+  margin-top: 10px;
+  color: var(--green);
+  font-size: 13px;
+}
+
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.price-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.price-card.featured {
+  border-color: var(--purple);
+  box-shadow: 0 0 28px #8b5cf619;
+}
+
+.price {
+  font-size: 32px;
+  font-weight: 900;
+  margin: 12px 0;
+}
+
+.price small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.price-card ul {
+  list-style: none;
+  margin: 18px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.price-card li {
+  margin: 9px 0;
+}
+
+.price-card li::before {
+  content: "✓ ";
+  color: var(--green);
+}
+
+.credit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.credit-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 18px;
+  border-radius: 13px;
+}
+
+.credit-card h3 {
+  font-size: 16px;
+}
+
+.credit-card strong {
+  display: block;
+  font-size: 23px;
+  margin: 10px 0;
+}
+
+.notice {
+  border: 1px solid #fbbf2435;
+  background: #fbbf240b;
+  padding: 15px;
+  border-radius: 11px;
+  color: #d7d0bd;
+  font-size: 13px;
+  margin-top: 20px;
+}
+
+.faq {
+  max-width: 750px;
+  margin: auto;
+}
+
+details {
+  padding: 18px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  margin-bottom: 10px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+details p {
+  color: var(--muted);
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+footer {
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+footer a {
+  color: #c4b5fd;
+}
+
+@media (max-width: 850px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .price-grid, .credit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tool-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .nav {
+    padding: 13px 0;
+    align-items: flex-start;
+  }
+
+  .navlinks {
+    gap: 10px;
+    font-size: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .nav .btn {
+    display: none;
+  }
+
+  .hero {
+    padding: 65px 0 45px;
+  }
+
+  .hero h1 {
+    letter-spacing: -1.4px;
+  }
+
+  .grid, .price-grid, .credit-grid, .two-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 45px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="#home">ClipForge<span> AI</span></a>
+
+    <nav class="navlinks">
+      <a href="#features">Features</a>
+      <a href="#studio">Studio</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <a href="#studio" class="btn">Open Studio ↗</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+  <div class="container">
+    <div class="badge">✦ Your AI-powered creative studio</div>
+
+    <h1>
+      Turn your ideas into
+      <span class="gradient-text"> incredible videos.</span>
+    </h1>
+
+    <p>
+      Create short clips, write compelling scripts, and prepare
+      cinematic AI video prompts — all from one creative workspace.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#studio" class="btn">Start Creating →</a>
+      <a href="#pricing" class="btn btn-secondary">Explore Pricing</a>
+    </div>
+
+    <div class="hero-note">
+      Start free · No credit card required for this demo
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Everything you need to <span class="gradient-text">create</span></h2>
+      <p>A simple starting point for your content creation workflow.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="icon">🎬</div>
+        <h3>AI Video Clipper</h3>
+        <p>Upload a video, select a section, and export a short clip using your browser.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">✍️</div>
+        <h3>AI Text Studio</h3>
+        <p>Prepare video scripts, viral-style hooks, captions, and creative ideas.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">✨</div>
+        <h3>AI Video Prompts</h3>
+        <p>Turn your ideas into detailed prompts ready for a compatible video model.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">📱</div>
+        <h3>Short-form Content</h3>
+        <p>Plan content for Reels, Shorts, TikTok, product ads, and social media.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">⚡</div>
+        <h3>Simple Workflow</h3>
+        <p>Keep your editing and content preparation tools in one place.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">💎</div>
+        <h3>Flexible Plans</h3>
+        <p>Plan free and paid tiers without promising unlimited, costly AI generation.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="studio">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Your Creative <span class="gradient-text">Studio</span></h2>
+      <p>Try the tools below in your browser.</p>
+    </div>
+
+    <div class="tool-layout">
+      <aside class="sidebar">
+        <button class="tab active" data-tab="clipper">🎬 Video Clipper</button>
+        <button class="tab" data-tab="text">✍️ Text Generator</button>
+        <button class="tab" data-tab="video">✨ Video Generator</button>
+      </aside>
+
+      <div class="card">
+
+        <!-- VIDEO CLIPPER -->
+        <div class="tool-panel active" id="clipper">
+          <h3>Video Clipper</h3>
+          <p class="muted">Select a video and choose the part you want to record.</p>
+
+          <label for="videoFile">Choose a video file</label>
+          <input type="file" id="videoFile" accept="video/*">
+
+          <video id="sourceVideo" controls class="hidden"></video>
+
+          <div id="clipControls" class="hidden">
+            <div class="two-cols">
+              <div>
+                <label for="startTime">Start time (seconds)</label>
+                <input id="startTime" type="number" min="0" value="0" step="0.1">
+              </div>
+
+              <div>
+                <label for="endTime">End time (seconds)</label>
+                <input id="endTime" type="number" min="0" value="5" step="0.1">
+              </div>
+            </div>
+
+            <div class="row">
+              <button class="btn btn-secondary" id="previewClip">Preview Start</button>
+              <button class="btn" id="exportClip">Export Clip</button>
+            </div>
+
+            <p class="muted" style="margin-top:12px">
+              Export records the selected playback interval in real time.
+              Keep this tab open until recording finishes.
+            </p>
+
+            <div id="clipStatus" class="status"></div>
+            <div id="clipResult"></div>
+          </div>
+        </div>
+
+        <!-- TEXT GENERATOR -->
+        <div class="tool-panel" id="text">
+          <h3>Text Studio</h3>
+          <p class="muted">Generate starter drafts using built-in templates.</p>
+
+          <label for="textType">What do you want to create?</label>
+          <select id="textType">
+            <option value="script">Short video script</option>
+            <option value="hook">Attention-grabbing hooks</option>
+            <option value="caption">Social media caption</option>
+            <option value="ad">Product advertisement</option>
+          </select>
+
+          <label for="textTopic">Topic or product</label>
+          <input id="textTopic" placeholder="e.g. Ayka skincare product">
+
+          <label for="textDetails">Details (optional)</label>
+          <textarea id="textDetails" placeholder="Describe your audience, benefits, tone, and video style..."></textarea>
+
+          <div class="row">
+            <button class="btn" id="generateText">Generate Draft</button>
+            <button class="btn btn-secondary" id="clearText">Clear</button>
+          </div>
+
+          <div id="textResult" class="result hidden"></div>
+
+          <button class="btn btn-secondary hidden" id="copyText" style="margin-top:12px">
+            Copy Text
+          </button>
+        </div>
+
+        <!-- AI VIDEO PROMPT BUILDER -->
+        <div class="tool-panel" id="video">
+          <h3>AI Video Prompt Builder</h3>
+          <p class="muted">Prepare a prompt for a compatible AI video model.</p>
+
+          <label for="videoIdea">Describe your video idea</label>
+          <textarea id="videoIdea" placeholder="e.g. A premium perfume bottle on a marble table..."></textarea>
+
+          <div class="two-cols">
+            <div>
+              <label for="videoStyle">Visual style</label>
+              <select id="videoStyle">
+                <option>Cinematic photorealism</option>
+                <option>UGC product advertisement</option>
+                <option>Luxury commercial</option>
+                <option>Macro ASMR</option>
+                <option>Documentary realism</option>
+                <option>Fantasy film</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="videoDuration">Duration</label>
+              <select id="videoDuration">
+                <option value="5">5 seconds</option>
+                <option value="10">10 seconds</option>
+                <option value="15">15 seconds</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="videoRatio">Aspect ratio</label>
+          <select id="videoRatio">
+            <option value="9:16">9:16 — Reels and Shorts</option>
+            <option value="16:9">16:9 — YouTube landscape</option>
+            <option value="1:1">1:1 — Square social post</option>
+          </select>
+
+          <div class="row">
+            <button class="btn" id="generatePrompt">Build Prompt</button>
+            <button class="btn btn-secondary" id="clearPrompt">Clear</button>
+          </div>
+
+          <div id="promptResult" class="result hidden"></div>
+
+          <button class="btn btn-secondary hidden" id="copyPrompt" style="margin-top:12px">
+            Copy Prompt
+          </button>
+
+          <div class="notice">
+            This tool prepares prompts only. It does not generate or render a video.
+            A compatible AI video model and its API integration are required for that.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Simple, flexible <span class="gradient-text">pricing</span></h2>
+      <p>Proposed prices for your future service. These are not active subscriptions.</p>
+    </div>
+
+    <div class="price-grid">
+      <article class="price-card">
+        <h3>Free</h3>
+        <div class="price">₹0 <small>/ month</small></div>
+        <p class="muted">Explore the tools.</p>
+        <ul>
+          <li>Text templates</li>
+          <li>Prompt builder</li>
+          <li>Browser clipper</li>
+          <li>Limited future AI credits</li>
+        </ul>
+        <a href="#studio" class="btn btn-secondary" style="width:100%">Try Free Tools</a>
+      </article>
+
+      <article class="price-card">
+        <h3>Starter</h3>
+        <div class="price">₹99 <small>/ month</small></div>
+        <p class="muted">For beginners.</p>
+        <ul>
+          <li>More content tools</li>
+          <li>Starter usage allowance</li>
+          <li>Budget video options</li>
+          <li>Usage limits apply</li>
+        </ul>
+        <button class="btn btn-secondary futurePlan" style="width:100%">Coming Soon</button>
+      </article>
+
+      <article class="price-card featured">
+        <h3>Creator</h3>
+        <div class="price">₹299 <small>/ month</small></div>
+        <p class="muted">For regular creators.</p>
+        <ul>
+          <li>Higher usage allowance</li>
+          <li>Creator workflows</li>
+          <li>Budget video options</li>
+          <li>Optional credit packs</li>
+        </ul>
+        <button class="btn futurePlan" style="width:100%">Coming Soon</button>
+      </article>
+
+      <article class="price-card">
+        <h3>Pro</h3>
+        <div class="price">₹699 <small>/ month</small></div>
+        <p class="muted">For active creators.</p>
+        <ul>
+          <li>Higher monthly allowance</li>
+          <li>Premium model access</li>
+          <li>Priority processing if supported</li>
+          <li>Usage limits apply</li>
+        </ul>
+        <button class="btn btn-secondary futurePlan" style="width:100%">Coming Soon</button>
+      </article>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h3>Business Plan — ₹1,499/month (proposed)</h3>
+      <p class="muted">
+        For teams and businesses. Final features, limits, and pricing must be
+        calculated from actual AI, hosting, payment, and support costs.
+      </p>
+      <button class="btn btn-secondary futurePlan" style="margin-top:15px">
+        Coming Soon
+      </button>
+    </div>
+
+    <div class="section-heading" style="margin:45px 0 22px">
+      <h2>AI Video <span class="gradient-text">Credit Packs</span></h2>
+      <p>Illustrative prices only — actual model costs must be checked before launch.</p>
+    </div>
+
+    <div class="credit-grid">
+      <div class="credit-card">
+        <h3>Budget · 5 seconds</h3>
+        <strong>₹39</strong>
+        <p class="muted">Proposed per-video price</p>
+      </div>
+
+      <div class="credit-card">
+        <h3>Budget · 10 seconds</h3>
+        <strong>₹79</strong>
+        <p class="muted">Proposed per-video price</p>
+      </div>
+
+      <div class="credit-card">
+        <h3>Premium · 5 seconds</h3>
+        <strong>₹69</strong>
+        <p class="muted">Proposed per-video price</p>
+      </div>
+
+      <div class="credit-card">
+        <h3>Premium · 10 seconds</h3>
+        <strong>₹139</strong>
+        <p class="muted">Proposed per-video price</p>
+      </div>
+    </div>
+
+    <div class="notice">
+      Before accepting payments, verify model costs, taxes, refunds, processing
+      fees, and generation failure rates. Never sell unlimited AI generation
+      without knowing your maximum costs.
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Frequently asked <span class="gradient-text">questions</span></h2>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>Is ClipForge AI free right now?</summary>
+        <p>
+          This demo is free to publish and try. It does not include a paid AI
+          backend, and AI model usage may cost money once connected.
+        </p>
+      </details>
+
+      <details>
+        <summary>Does the AI Video Generator create actual videos?</summary>
+        <p>
+          Not yet. It prepares a detailed prompt. Actual video generation
+          requires connecting a video model through a backend service.
+        </p>
+      </details>
+
+      <details>
+        <summary>Does the text generator use a real AI model?</summary>
+        <p>
+          This initial version uses templates in your browser. A real AI text
+          API can be connected in a later stage.
+        </p>
+      </details>
+
+      <details>
+        <summary>Are the subscription buttons connected to payments?</summary>
+        <p>
+          No. They are placeholders. Secure account management and a payment
+          provider must be integrated before selling subscriptions.
+        </p>
+      </details>
+
+      <details>
+        <summary>Will my uploaded video be sent to a server?</summary>
+        <p>
+          The clipper in this version works in your browser. Your selected
+          file is not uploaded by this code. Export support varies by browser.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo">ClipForge<span> AI</span></div>
+    <p style="margin-top:8px">Create smarter. Edit faster. Imagine more.</p>
+    <p style="margin-top:8px">© <span id="year"></span> ClipForge AI · Starter demo</p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+// Footer year
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Studio navigation
+document.querySelectorAll(".tab").forEach(function(button) {
+  button.addEventListener("click", function() {
+    document.querySelectorAll(".tab").forEach(function(tab) {
+      tab.classList.remove("active");
+    });
+
+    document.querySelectorAll(".tool-panel").forEach(function(panel) {
+      panel.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    document.getElementById(button.dataset.tab).classList.add("active");
+  });
+});
+
+// Show placeholder notices on plans that are not connected to payments
+document.querySelectorAll(".futurePlan").forEach(function(button) {
+  button.addEventListener("click", function() {
+    alert("Subscriptions are not active yet. Payment integration will be added in a later version.");
+  });
+});
+
+// ----------------------------
+// TEXT STUDIO
+// ----------------------------
+
+const textType = document.getElementById("textType");
+const textTopic = document.getElementById("textTopic");
+const textDetails = document.getElementById("textDetails");
+const textResult = document.getElementById("textResult");
+const copyText = document.getElementById("copyText");
+
+document.getElementById("generateText").addEventListener("click", function() {
+  const topic = textTopic.value.trim();
+  const details = textDetails.value.trim();
+
+  if (!topic) {
+    alert("Please enter a topic or product first.");
+    textTopic.focus();
+    return;
+  }
+
+  let output = "";
+
+  if (textType.value === "script") {
+    output =
+`SHORT VIDEO SCRIPT: ${topic}
+
+HOOK (0–3 seconds):
+"Wait — here's something you should know about ${topic}."
+
+MAIN SECTION (3–15 seconds):
+${details || "Introduce the topic, explain its main benefit, and show a relevant example."}
+
+ENDING (15–20 seconds):
+"Would you try this? Tell me in the comments."
+
+CALL TO ACTION:
+"Follow for more."
+
+NOTE:
+This is a template draft. Review all claims and tailor it to your audience.`;
+  }
+
+  if (textType.value === "hook") {
+    output =
+`HOOK IDEAS FOR: ${topic}
+
+1. "Stop scrolling if you've been looking for ${topic}."
+2. "Here's one thing most people overlook about ${topic}."
+3. "I wish I had known this about ${topic} earlier."
+4. "Before you try ${topic}, watch this."
+5. "Let's see what makes ${topic} worth talking about."
+
+Choose the hook that best fits your actual content.`;
+  }
+
+  if (textType.value === "caption") {
+    output =
+`CAPTION FOR: ${topic}
+
+Curious about ${topic}? ✨
+
+${details || "Discover the details, explore the possibilities, and decide what works for you."}
+
+Save this post for later and share your thoughts below.
+
+#${topic.replace(/[^a-zA-Z0-9]/g, "")} #ContentCreation #Reels #Explore`;
+  }
+
+  if (textType.value === "ad") {
+    output =
+`PRODUCT AD DRAFT: ${topic}
+
+OPENING:
+"Meet ${topic}."
+
+PRODUCT STORY:
+${details || "Introduce the product and explain its verified features and benefits."}
+
+VISUAL IDEA:
+Show the product in a clean, well-lit setting. Use close-up shots and natural movements.
+
+ENDING:
+"Discover ${topic} today."
+
+IMPORTANT:
+Verify product claims before publishing. Do not invent results, reviews, or guarantees.`;
+  }
+
+  textResult.textContent = output;
+  textResult.classList.remove("hidden");
+  copyText.classList.remove("hidden");
+});
+
+document.getElementById("clearText").addEventListener("click", function() {
+  textTopic.value = "";
+  textDetails.value = "";
+  textResult.textContent = "";
+  textResult.classList.add("hidden");
+  copyText.classList.add("hidden");
+});
+
+copyText.addEventListener("click", async function() {
+  await copyToClipboard(textResult.textContent);
+});
+
+// ----------------------------
+// AI VIDEO PROMPT BUILDER
+// ----------------------------
+
+const promptResult = document.getElementById("promptResult");
+const copyPrompt = document.getElementById("copyPrompt");
+
+document.getElementById("generatePrompt").addEventListener("click", function() {
+  const idea = document.getElementById("videoIdea").value.trim();
+
+  if (!idea) {
+    alert("Please describe your video idea first.");
+    document.getElementById("videoIdea").focus();
+    return;
+  }
+
+  const style = document.getElementById("videoStyle").value;
+  const duration = document.getElementById("videoDuration").value;
+  const ratio = document.getElementById("videoRatio").value;
+
+  const prompt =
+`Create a ${duration}-second video in ${style} style.
+
+CONCEPT:
+${idea}
+
+VISUAL DIRECTION:
+Use realistic materials, natural-looking lighting, detailed textures, believable motion, and a carefully composed frame.
+
+CAMERA:
+Use smooth, intentional camera movement and consistent focus. Avoid abrupt, unnecessary transitions.
+
+MOTION:
+Keep object movement physically plausible. Maintain visual continuity between frames.
+
+LIGHTING:
+Use coherent lighting and realistic shadows appropriate to the scene.
+
+FORMAT:
+Aspect ratio ${ratio}. Compose the subject for the intended format.
+
+QUALITY:
+Aim for detailed textures, natural motion, coherent geometry, and consistent visual appearance.
+
+AVOID:
+Flickering, distorted objects, inconsistent subjects, random camera movements, and unwanted text.
+
+This is a prompt template. Results depend on the AI video model and its settings.`;
+
+  promptResult.textContent = prompt;
+  promptResult.classList.remove("hidden");
+  copyPrompt.classList.remove("hidden");
+});
+
+document.getElementById("clearPrompt").addEventListener("click", function() {
+  document.getElementById("videoIdea").value = "";
+  promptResult.textContent = "";
+  promptResult.classList.add("hidden");
+  copyPrompt.classList.add("hidden");
+});
+
+copyPrompt.addEventListener("click", async function() {
+  await copyToClipboard(promptResult.textContent);
+});
+
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("Copied to clipboard!");
+  } catch (error) {
+    const temporary = document.createElement("textarea");
+    temporary.value = text;
+    document.body.appendChild(temporary);
+    temporary.select();
+    document.execCommand("copy");
+    temporary.remove();
+    alert("Copied. If copying failed, select the text and copy it manually.");
+  }
+}
+
+// ----------------------------
+// BROWSER VIDEO CLIPPER
+// ----------------------------
+
+const videoFile = document.getElementById("videoFile");
+const sourceVideo = document.getElementById("sourceVideo");
+const clipControls = document.getElementById("clipControls");
+const startTime = document.getElementById("startTime");
+const endTime = document.getElementById("endTime");
+const clipStatus = document.getElementById("clipStatus");
+const clipResult = document.getElementById("clipResult");
+const previewClip = document.getElementById("previewClip");
+const exportClip = document.getElementById("exportClip");
+
+let currentVideoURL = null;
+let exportInProgress = false;
+
+videoFile.addEventListener("change", function() {
+  const file = videoFile.files && videoFile.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("video/")) {
+    alert("Please select a valid video file.");
+    return;
+  }
+
+  if (currentVideoURL) {
+    URL.revokeObjectURL(currentVideoURL);
+  }
+
+  currentVideoURL = URL.createObjectURL(file);
+  sourceVideo.src = currentVideoURL;
+  sourceVideo.classList.remove("hidden");
+  clipControls.classList.remove("hidden");
+  clipStatus.textContent = "";
+  clipResult.innerHTML = "";
+
+  sourceVideo.onloadedmetadata = function() {
+    startTime.value = 0;
+    endTime.value = Math.min(5, sourceVideo.duration).toFixed(1);
+    startTime.max = sourceVideo.duration;
+    endTime.max = sourceVideo.duration;
+  };
+});
+
+previewClip.addEventListener("click", async function() {
+  const start = Number(startTime.value);
+  const end = Number(endTime.value);
+
+  if (!validateClipTimes(start, end)) return;
+
+  try {
+    sourceVideo.currentTime = start;
+    await sourceVideo.play();
+    clipStatus.textContent = "Previewing. Playback will stop at your selected end time.";
+  } catch (error) {
+    clipStatus.textContent = "Preview could not start. Press Play on the video instead.";
+  }
+});
+
+sourceVideo.addEventListener("timeupdate", function() {
+  const end = Number(endTime.value);
+
+  if (
+    sourceVideo.currentTime >= end &&
+    !sourceVideo.paused
+  ) {
+    sourceVideo.pause();
+  }
+});
+
+function validateClipTimes(start, end) {
+  if (!Number.isFinite(sourceVideo.duration)) {
+    alert("Please wait for the video to load.");
+    return false;
+  }
+
+  if (
+    !Number.isFinite(start) ||
+    !Number.isFinite(end) ||
+    start < 0 ||
+    end <= start ||
+    end > sourceVideo.duration
+  ) {
+    alert("Choose valid start and end times within the video duration.");
+    return false;
+  }
+
+  return true;
+}
+
+exportClip.addEventListener("click", async function() {
+  if (exportInProgress) return;
+
+  const start = Number(startTime.value);
+  const end = Number(endTime.value);
+
+  if (!validateClipTimes(start, end)) return;
+
+  if (!window.MediaRecorder) {
+    alert("This browser does not support recording. Try an updated desktop version of Chrome or Edge.");
+    return;
+  }
+
+  if (!sourceVideo.captureStream && !sourceVideo.mozCaptureStream) {
+    alert("This browser does not support video stream capture. Try an updated desktop version of Chrome.");
+    return;
+  }
+
+  const capture = sourceVideo.captureStream
+    ? sourceVideo.captureStream.bind(sourceVideo)
+    : sourceVideo.mozCaptureStream.bind(sourceVideo);
+
+  let stream = null;
+  let recorder = null;
+  let chunks = [];
+  let stopTimer = null;
+
+  try {
+    exportInProgress = true;
+    exportClip.disabled = true;
+    clipResult.innerHTML = "";
+    clipStatus.textContent =
+      "Recording your clip in real time. Keep this tab open...";
+
+    sourceVideo.pause();
+    sourceVideo.currentTime = start;
+
+    await new Promise(function(resolve, reject) {
+      const onSeeked = function() {
+        cleanup();
+        resolve();
+      };
+
+      const onError = function() {
+        cleanup();
+        reject(new Error("Could not seek to the selected start time."));
+      };
+
+      const cleanup = function() {
+        sourceVideo.removeEventListener("seeked", onSeeked);
+        sourceVideo.removeEventListener("error", onError);
+      };
+
+      sourceVideo.addEventListener("seeked", onSeeked, { once: true });
+      sourceVideo.addEventListener("error", onError, { once: true });
+
+      // Resolve immediately if the browser has already reached the target.
+      if (Math.abs(sourceVideo.currentTime - start) < 0.05) {
+        cleanup();
+        resolve();
+      }
+    });
+
+    stream = capture();
+
+    const mimeTypes = [
+      "video/webm;codecs=vp9,opus",
+      "video/webm;codecs=vp8,opus",
+      "video/webm"
+    ];
+
+    const mimeType = mimeTypes.find(function(type) {
+      return MediaRecorder.isTypeSupported(type);
+    });
+
+    recorder = mimeType
+      ? new MediaRecorder(stream, { mimeType: mimeType })
+      : new MediaRecorder(stream);
+
+    recorder.ondataavailable = function(event) {
+      if (event.data && event.data.size > 0) {
+        chunks.push(event.data);
+      }
+    };
+
+    recorder.onerror = function() {
+      clipStatus.textContent =
+        "Recording failed. Try a shorter clip or another browser.";
+    };
+
+    recorder.onstop = function() {
+      clearTimeout(stopTimer);
+
+      const actualType = recorder.mimeType || "video/webm";
+      const blob = new Blob(chunks, { type: actualType });
+      const outputURL = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = outputURL;
+      link.download = "clipforge-clip.webm";
+      link.className = "btn";
+      link.textContent = "Download Your Clip";
+
+      const outputVideo = document.createElement("video");
+      outputVideo.controls = true;
+      outputVideo.src = outputURL;
+      outputVideo.style.marginTop = "15px";
+
+      clipResult.innerHTML = "";
+      clipResult.appendChild(link);
+      clipResult.appendChild(outputVideo);
+
+      clipStatus.textContent = blob.size
+        ? "Clip recorded. Check the preview and download it."
+        : "The export was empty. Try again or use another browser.";
+
+      stream.getTracks().forEach(function(track) {
+        track.stop();
+      });
+
+      sourceVideo.pause();
+      exportInProgress = false;
+      exportClip.disabled = false;
+    };
+
+    sourceVideo.addEventListener("ended", stopRecording, { once: true });
+    sourceVideo.addEventListener("timeupdate", checkEndTime);
+
+    function checkEndTime() {
+      if (sourceVideo.currentTime >= end) {
+        stopRecording();
+      }
+    }
+
+    function stopRecording() {
+      sourceVideo.removeEventListener("timeupdate", checkEndTime);
+      sourceVideo.removeEventListener("ended", stopRecording);
+
+      if (stopTimer) clearTimeout(stopTimer);
+
+      if (recorder && recorder.state !== "inactive") {
+        recorder.stop();
+      }
+    }
+
+    recorder.start(250);
+
+    await sourceVideo.play();
+
+    // Backup timer in case the video's timeupdate event is delayed.
+    stopTimer = setTimeout(stopRecording, (end - start + 2) * 1000);
+
+  } catch (error) {
+    if (stream) {
+      stream.getTracks().forEach(function(track) {
+        track.stop();
+      });
+    }
+
+    clipStatus.textContent =
+      "Could not export this clip. Try another video or an updated desktop browser.";
+
+    exportInProgress = false;
+    exportClip.disabled = false;
+  }
+});
+
+window.addEventListener("beforeunload", function() {
+  if (currentVideoURL) {
+    URL.revokeObjectURL(currentVideoURL);
+  }
+});
+</script>
+
+</body>
+</html>
