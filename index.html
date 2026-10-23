@@ -956,9 +956,12 @@ const textDetails = document.getElementById("textDetails");
 const textResult = document.getElementById("textResult");
 const copyText = document.getElementById("copyText");
 
-document.getElementById("generateText").addEventListener("click", function() {
+const CLIPFORGE_AI_API_URL = "https://clipforge-api.viralpost2903.workers.dev/";
+
+document.getElementById("generateText").addEventListener("click", async function() {
   const topic = textTopic.value.trim();
   const details = textDetails.value.trim();
+  const button = document.getElementById("generateText");
 
   if (!topic) {
     alert("Please enter a topic or product first.");
@@ -966,77 +969,45 @@ document.getElementById("generateText").addEventListener("click", function() {
     return;
   }
 
-  let output = "";
-
-  if (textType.value === "script") {
-    output =
-`SHORT VIDEO SCRIPT: ${topic}
-
-HOOK (0–3 seconds):
-"Wait — here's something you should know about ${topic}."
-
-MAIN SECTION (3–15 seconds):
-${details || "Introduce the topic, explain its main benefit, and show a relevant example."}
-
-ENDING (15–20 seconds):
-"Would you try this? Tell me in the comments."
-
-CALL TO ACTION:
-"Follow for more."
-
-NOTE:
-This is a template draft. Review all claims and tailor it to your audience.`;
-  }
-
-  if (textType.value === "hook") {
-    output =
-`HOOK IDEAS FOR: ${topic}
-
-1. "Stop scrolling if you've been looking for ${topic}."
-2. "Here's one thing most people overlook about ${topic}."
-3. "I wish I had known this about ${topic} earlier."
-4. "Before you try ${topic}, watch this."
-5. "Let's see what makes ${topic} worth talking about."
-
-Choose the hook that best fits your actual content.`;
-  }
-
-  if (textType.value === "caption") {
-    output =
-`CAPTION FOR: ${topic}
-
-Curious about ${topic}? ✨
-
-${details || "Discover the details, explore the possibilities, and decide what works for you."}
-
-Save this post for later and share your thoughts below.
-
-#${topic.replace(/[^a-zA-Z0-9]/g, "")} #ContentCreation #Reels #Explore`;
-  }
-
-  if (textType.value === "ad") {
-    output =
-`PRODUCT AD DRAFT: ${topic}
-
-OPENING:
-"Meet ${topic}."
-
-PRODUCT STORY:
-${details || "Introduce the product and explain its verified features and benefits."}
-
-VISUAL IDEA:
-Show the product in a clean, well-lit setting. Use close-up shots and natural movements.
-
-ENDING:
-"Discover ${topic} today."
-
-IMPORTANT:
-Verify product claims before publishing. Do not invent results, reviews, or guarantees.`;
-  }
-
-  textResult.textContent = output;
+  const originalLabel = button.textContent;
+  button.disabled = true;
+  button.textContent = "Generating with AI...";
+  textResult.textContent = "ClipForge AI is creating your draft. Please wait...";
   textResult.classList.remove("hidden");
-  copyText.classList.remove("hidden");
+  copyText.classList.add("hidden");
+
+  try {
+    const response = await fetch(CLIPFORGE_AI_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: textType.value,
+        topic: topic,
+        details: details
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "AI generation failed. Please try again.");
+    }
+
+    if (!data.text) {
+      throw new Error("The AI returned an empty response.");
+    }
+
+    textResult.textContent = data.text;
+    copyText.classList.remove("hidden");
+
+  } catch (error) {
+    textResult.textContent =
+      "Could not generate AI text. " +
+      (error.message || "Please check your connection and try again.");
+  } finally {
+    button.disabled = false;
+    button.textContent = originalLabel;
+  }
 });
 
 document.getElementById("clearText").addEventListener("click", function() {
@@ -1050,7 +1021,7 @@ document.getElementById("clearText").addEventListener("click", function() {
 copyText.addEventListener("click", async function() {
   await copyToClipboard(textResult.textContent);
 });
-
+  
 // ----------------------------
 // AI VIDEO PROMPT BUILDER
 // ----------------------------
